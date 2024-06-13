@@ -1,0 +1,232 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        font-family: 'Arial', sans-serif;
+    }
+
+    .content-wrapper {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .background-container {
+        background-image: url('{% static "images/wall3.jpeg" %}');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+      
+        z-index: -1;
+        animation: fadeIn 2s ease-in-out;
+    }
+
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(12, 9, 9, 0.5);
+        z-index: -1;
+        animation: fadeIn 2s ease-in-out;
+    }
+
+    .container {
+        position: relative;
+        z-index: 1;
+        padding: 15px;
+        max-width: 800px;
+        margin: 110px auto;
+        animation: slideIn 1.5s ease-out;
+    }
+
+    h1, h3 {
+        text-align: center;
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    }
+
+    h1 {
+        font-size: 3rem;
+        font-weight: bold;
+        filter: brightness(1.2) contrast(1.5);
+        animation: zoomIn 1.5s ease-out;
+    }
+
+    h3 {
+        font-size: 2rem;
+        font-style: italic;
+        filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.7));
+        animation: fadeInUp 1.5s ease-out;
+    }
+
+    .para {
+        margin-top: 20px;
+        text-align: center;
+        color: white;
+        font-size: 1.2rem;
+        line-height: 1.6;
+        animation: fadeInUp 1.5s ease-out;
+    }
+
+    .btn {
+        margin-top: 20px;
+        animation: fadeInUp 2s ease-out;
+    }
+
+    .footer {
+        background-color: #343a40;
+        color: white;
+        text-align: center;
+        padding: 10px 0;
+        width: 100%;
+        animation: fadeIn 2s ease-in-out;
+    }
+
+    .social-icons a {
+        margin: 0 10px;
+        color: white;
+        font-size: 1.5rem;
+        transition: color 0.3s ease;
+    }
+
+    .social-icons a:hover {
+        color: #ddd;
+    }
+
+    @media (max-width: 768px) {
+        .container {
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 2rem;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+        }
+
+        .para {
+            font-size: 1rem;
+        }
+
+        .btn {
+            font-size: 0.9rem;
+            padding: 10px 20px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .container {
+            padding: 15px;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+        }
+
+        h3 {
+            font-size: 1rem;
+        }
+
+        .para {
+            font-size: 0.9rem;
+        }
+
+        .btn {
+            font-size: 0.8rem;
+            padding: 8px 16px;
+        }
+        .terms{
+            font-size:0.8rem;
+        }
+        .copy{
+            font-size:0.8rem;
+        }
+        .follow{
+            font-size:0.8rem;
+        }
+        .social-icons a {
+            font-size:0.8rem;}
+        
+            .btn {
+                font-size: 0.6rem;
+                padding: 5px 5px;
+            }
+            .nav-item a {
+                font-size:0.8rem;
+             }    
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @keyframes slideIn {
+        from { transform: translateY(50px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes zoomIn {
+        from { transform: scale(0.8); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+        from { transform: translateY(20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+</style>
+
+<div class="content-wrapper">
+    <div class="background-container"></div><!-- Container for the blurred background image -->
+    <div class="overlay"></div><!-- Overlay to create a semi-transparent background -->
+    <div class="container mt-5"><br><br>
+        <h1 class="mt-5">STELLAR SOLUTIONS</h1><br>
+        <h3>We Deal With The Aspects Of Professional IT Solutions</h3>
+        <h5 class="para p-3">"Elevate your business with Stellar Solutions. As a software development company in India, we craft custom websites and software solutions to fit your unique business needs. Our team of experts delivers solutions that streamline operations, boost efficiency, and create a lasting impact. Partner with us to take your success to new heights with quality and excellence at the forefront."</h5><br>
+        <div class="text-center">
+            <a role="button" class="btn btn-light rounded-pill" href="{% url 'aboutus' %}">Know More</a>
+        </div><br><br><br><br>
+    </div>
+</div>
+<br>
+<footer class="footer ">
+    <div class="container-fluid mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <h5 class=" terms text-center mt-3">Terms & Conditions | Privacy Policy</h5>
+            </div><br>
+            <div class="row justify-content-center">
+                <div class="col-md-12">
+                    <p class=" copy text-center text-white">Copyright © 2024 Stellar Solutions. All rights reserved.</p>
+                </div>
+                <div class="social-icons">
+                    <p class=" follow text-white text-center">Follow Us On:</p>
+                    <a href="#" class="social-icon text-white"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon text-white"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon text-white"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</footer>
+</body>
+</html>
+{% endblock %}
+

@@ -1,0 +1,189 @@
+
+{% extends 'trainerbase.html' %}
+{% block content %}
+{% load static %}
+<style>
+    .background-container {
+        background-image: url('{% static "images/wall5.jpg" %}');
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        filter: blur(2px);
+        z-index: -1;
+    }
+    .overlay {
+        position: fixed;
+        top: 56px; /* Adjusted for navbar height */
+        left: 220px; /* Adjusted for navbar width */
+        width: calc(100% - 220px); /* Adjusted for navbar width */
+        height: calc(100% - 56px); /* Adjusted for navbar height */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow-y: auto; /* Allow vertical scrolling */
+        padding: 20px; /* Additional padding for better spacing */
+        background-color: rgba(12, 9, 9, 0.5);
+    }
+    @media (min-width: 992px) {
+        .vertical-nav {
+            position: fixed;
+            top: 56px;
+            left: 0;
+            width: 220px;
+            height: 100%;
+            background-color: #f8f8f8;
+            overflow-y: auto;
+            padding-top: 30px;
+        }
+        li {
+            border-bottom: 2px solid black;
+        }
+        li:hover {
+            background-color: blueviolet;
+        }
+    }
+    .form-container {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        max-width: 800px; /* Adjust the width as needed */
+        margin: 0 auto; /* Center the form container */
+        padding: 20px;
+        border-radius: 10px;
+        /* Allow horizontal scrolling on small screens 
+        background: rgba(255, 255, 255, 0.3); /* Slightly transparent white background for readability */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    .table {
+        width: 100%;
+        overflow-x: auto; /* Allow horizontal scrolling on small screens */
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    th, td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+        color: white;
+    }
+    th {
+        background-color: #333;
+        color: #fff;
+    }
+    tr:nth-child(even) {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+    .text-center {
+        text-align: center;
+    }
+    @media (min-width: 992px) {
+        .vertical-nav {
+            position: fixed;
+            top: 56px;
+            left: 0;
+            width: 220px;
+            height: 100%;
+            background-color: #f8f8f8;
+            overflow-y: auto;
+            padding-top: 30px;
+        }
+        li {
+            border-bottom: 2px solid black;
+        }
+        li:hover {
+            background-color: blueviolet;
+        }
+    }
+    @media (max-width: 991px) {
+        .overlay {
+            top: 56px; /* Adjust for navbar height */
+            left: 0;
+            width: 100%;
+            height: calc(100% - 56px); /* Adjust for navbar height */
+            padding: 10px; /* Reduce padding for smaller screens */
+        }
+        .form-container {
+            padding: 20px; /* Reduce padding for smaller screens */
+        }
+        .col-sm-8, .col-md-6, .col-lg-6 {
+            width: 100%;
+            padding: 0 10px;
+        }
+    }
+    @media (max-width: 575px) {
+        
+        .col-sm-8, .col-md-6, .col-lg-6 {
+            padding: 0 5px ;
+         
+        }
+        .login-form input, .login-form select, .login-form button {
+            font-size: 14px;
+        
+           
+        }
+       
+
+            h2 {
+                font-size: 1.5rem;
+            }
+           
+            td{
+                font-size:0.7rem;
+            }
+            th{
+                font-size:0.8rem;
+            }
+           
+            
+            
+    }
+</style>
+<body>
+    <div class="background-container"></div>
+    <div class="overlay">
+        <div class="form-container">
+            <h2 class="text-center text-white">View Projects</h2>
+            <table class="table-responsive text-white">
+                <thead>
+                    <tr>
+                        <th>Project Name</th>
+                        <th>Trainee</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Status</th>
+                        <th>Uploaded File</th>
+                        <!-- Add more columns if needed -->
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for project in projects %}
+                    <tr>
+                        <td>{{ project.name }}</td>
+                        <td>{{ project.assignment.trainee.user.first_name }} {{ project.assignment.trainee.user.last_name }}</td>
+                        <td>{{ project.start_date }}</td>
+                        <td>{{ project.end_date }}</td>
+                        <td>{{ project.status }}</td>
+                        <td>
+                            {% if project.file %}
+                            <a href="{{ project.file.url }}" target="_blank">{{project.file}}</a>
+                            {% else %}
+                            No file uploaded
+                            {% endif %}
+                        </td>
+                        <!-- Add more columns if needed -->
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+{% endblock %}

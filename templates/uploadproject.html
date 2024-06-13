@@ -1,0 +1,142 @@
+{% extends 'traineebase.html' %}
+{% block content %}
+{% load static %}
+<style>
+    .background-container {
+        background-image: url('{% static "images/wall5.jpg" %}');
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        filter: blur(0.1px);
+        z-index: -1;
+    }
+    .overlay {
+        position: fixed;
+        top: 66px; /* Adjusted for navbar height */
+        left: 220px; /* Adjusted for navbar width */
+        width: calc(100% - 220px); /* Adjusted for navbar width */
+        height: calc(100% - 56px); /* Adjusted for navbar height */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow-y: auto; /* Allow vertical scrolling */
+        padding: 20px; /* Additional padding for better spacing */
+        background-color: rgba(12, 9, 9, 0.5);
+    }
+    .table-container {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        max-width: 100%;
+        height: calc(100% - 56px); /* Adjusted for navbar height */
+        overflow-y: auto;
+        overflow-x: auto; /* Allow horizontal scrolling */
+        margin: 0 auto;
+    }
+    .table-responsive {
+        width: 100%;
+        display: block;
+        overflow-x: auto;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border: 1px solid #ddd;
+    }
+    .product-image {
+        max-width: 100px;
+        max-height: 100px;
+    }
+    @media (max-width: 991px) {
+        .overlay {
+            top: 56px; /* Adjust for navbar height */
+            left: 0;
+            width: 100%;
+            height: calc(100% - 56px); /* Adjust for navbar height */
+            padding: 10px; /* Reduce padding for smaller screens */
+        }
+        .table-container {
+            padding: 10px; /* Reduce padding for smaller screens */
+            max-width: 100%; /* Ensure full width on smaller screens */
+            height: calc(100% - 56px); /* Adjust for navbar height */
+        }
+       
+    }
+  
+    @media (max-width: 576px) {
+        
+
+        h2 {
+            font-size: 1.3rem;
+        }
+       
+        h2{
+            font-size:1.3rem;
+        }
+        td{
+            font-size:0.7rem;
+        }
+        th{
+            font-size:0.8rem;
+        }
+        .btn{
+            
+                font-size: 0.6rem;
+                padding: 5px 5px;
+            
+        }
+    }
+</style>
+<body>
+<div class="background-container"></div>
+<div class="overlay">
+    <div class="container table-container">
+        <h2 class="text-center text-white">Upload Project</h2>
+        <br>
+        <div class="table-responsive">
+            <table class="table table-bordered text-white text-center">
+                <thead>
+                    <tr>
+                        <th>Project Name</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Upload File</th>
+                        <th>Action</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for project in projects %}
+                    <tr>
+                        <td>{{ project.name }}</td>
+                        <td>{{ project.start_date }}</td>
+                        <td>{{ project.end_date }}</td>
+                        <td>
+                            <form method="post" action="{% url 'uploadproject_db' %}" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <input type="hidden" name="project_id" value="{{ project.id }}">
+                                <input type="file" name="file" required>
+                        </td>
+                        <td>
+                                <button type="submit" class="btn btn-primary btn-sm">Upload</button>
+                            </form>
+                        </td>
+                        <td>{{ project.status|default:"Not Uploaded" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+{% endblock %}
+

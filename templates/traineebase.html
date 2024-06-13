@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STELLAR</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="shortcut-icon" type="image" href="tuitionicon.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <style>
+        .navbar-brand-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .navbar-brand-subtitle {
+            font-size: 0.8rem;
+            font-weight: normal;
+            color: #ccc;
+            margin-top: -5px; /* Adjust this value to fine-tune the vertical spacing */
+        }
+        .navbar {
+            min-height: 80px; /* Adjust the navbar height if needed */
+        }
+    
+        .vertical-nav .nav-link {
+            padding: 8px 15px; /* Adjust padding for vertical nav items */
+        }
+        .vertical-nav .nav-header {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            padding: 10px 20px;
+            border-bottom: 1px solid #444;
+        }
+        .nav-link i {
+            margin-right: 8px; /* Space between icon and text */
+        }
+
+        /* Additional style to ensure no scrollbars */
+        .vertical-nav::-webkit-scrollbar {
+            display: none;
+        }
+        .vertical-nav {
+            max-height: 100vh
+            overflow: hidden;
+            -ms-overflow-style: none; 
+            scrollbar-width: none;  
+        }
+        @media (min-width: 992px) {
+            .vertical-nav {
+                position: fixed;
+                top: 56px;
+                left: 0;
+                width: 220px;
+                height: 100%;
+                background-color: #f8f8f8;
+                overflow-y: auto;
+                padding-top: 30px;
+            }
+            li {
+                border-bottom: 2px solid black;
+            }
+            li:hover {
+                background-color: blueviolet;
+            }
+        }
+        @media (max-width: 576px) {
+            .navbar {
+                min-height: 60px; /* Adjust the navbar height for smaller screens */
+            }
+            .navbar-brand {
+                font-size: 1.2rem; /* Adjust brand font size for smaller screens */
+            }
+            .vertical-nav .nav-link {
+                padding: 5px 10px; /* Adjust padding for vertical nav items on smaller screens */
+                font-size: 0.9rem; /* Adjust font size for smaller screens */
+            }
+            .vertical-nav .nav-header {
+                font-size: 1rem; /* Adjust nav header font size for smaller screens */
+                padding: 8px 15px;
+            }
+            .navbar-nav.ml-auto .nav-item .nav-link {
+                font-size: 0.9rem; /* Adjust font size for nav links on smaller screens */
+            }
+            .navbar-nav.ml-auto .nav-item .btn {
+                font-size: 0.5rem; /* Adjust font size for buttons on smaller screens */
+            }
+           
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark fixed-top">
+        <a class="navbar-brand text-white" href="#">STELLAR</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+         
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto flex-column vertical-nav bg-dark">
+                
+                <li class="nav-item nav-header">
+                    <div class="user-info">
+                        <img src="{{user_member.image.url}}" alt="img" style="border-radius: 50%; width: 50px; height: 50px; object-fit: cover;">
+                        <span>{{ user.username }}</span>
+                    </div>
+                </li>
+                <li class="nav-item nav-header">
+                    <div class="user-info">
+                       {{user_member.department.department_name}} Trainee
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'traineedash' %}"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+                </li>
+               
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'classschedule_trainee' user_member.id %}"><i class="fas fa-chalkboard-teacher"></i>Class Schedule</a>
+                </li>
+                
+               
+               
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'notificationtrainee' %}"><i class="fas fa-check-circle"></i>Notifications<span> </span><span class="count-badge bg-success ">{{unread_notifications_count}}</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'applyleave_trainee' %}"><i class="fas fa-check-circle"></i>Apply Leave</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'uploadproject' %}"><i class="fas fa-user-check"></i>Projects</a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'owntraineeattendance' %}"><i class="fas fa-calendar-check"></i> Attendance</a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'changepasswordtrainee' %}"><i class="fas fa-user-check"></i>Change Password</a>
+                </li>
+            </ul>
+            
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-white d-none d-lg-block" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i>Log Out</a> <!-- Hide on smaller screens -->
+                    <button class="btn btn-light text-dark d-block d-lg-none mt-2 logoutbuttn"><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i>Log Out</a></button> <!-- Show on smaller screens -->
+                </li>
+            </ul>
+            
+        </div>
+    </nav>
+
+
+    
+
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

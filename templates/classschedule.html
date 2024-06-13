@@ -1,0 +1,198 @@
+{% extends 'adminbase.html' %}
+{% block content %}
+{% load static %}
+<style>
+    .background-container {
+        background-image: url('{% static "images/wall5.jpg" %}');
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        filter: blur(0.1px);
+        z-index: -1;
+    }
+    .overlay {
+        position: fixed;
+        top: 66px;
+        left: 220px;
+        width: calc(100% - 220px);
+        height: calc(100% - 56px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow-y: auto;
+        padding: 20px;
+        background-color: rgba(12, 9, 9, 0.5);
+    }
+    .form-container {
+        position: relative;
+        z-index: 1;
+        width: 90%;
+        
+        max-width: 500px;
+        margin-top: 30px;
+        padding-top: 10px;
+        border-radius: 5px;
+        background: rgba(255, 255, 255, 0.2);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    @media (min-width: 992px) {
+        .vertical-nav {
+            position: fixed;
+            top: 56px;
+            left: 0;
+            width: 220px;
+            height: 100%;
+            background-color: #f8f8f8;
+            overflow-y: auto;
+            padding-top: 30px;
+        }
+        li {
+            border-bottom: 2px solid black;
+        }
+        li:hover {
+            background-color: blueviolet;
+        }
+    }
+    .form-group {
+        margin-bottom: 3px;
+    }
+    label {
+       
+            color:white;
+      
+        display: block;
+        margin-bottom: 3px;
+    }
+    input[type="text"], select, input[type='time'] {
+        width: 100%;
+        padding: 5px;
+        margin: 5px 0 10px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    .text-center {
+        text-align: center;
+    }
+    @media (max-width: 991px) {
+        .overlay {
+            top: 56px; /* Adjust for navbar height */
+            left: 0;
+            width: 100%;
+            height: calc(100% - 56px); /* Adjust for navbar height */
+            padding: 10px; /* Reduce padding for smaller screens */
+        }
+        .form-container {
+            padding: 20px; /* Reduce padding for smaller screens */
+            
+        }
+        .col-sm-8, .col-md-6, .col-lg-6 {
+            width: 100%;
+            padding: 0 10px;
+        }
+    }
+    @media (max-width: 575px) {
+        .col-sm-8, .col-md-6, .col-lg-6 {
+            padding: 0 5px;
+        }
+        .login-form input, .login-form select, .login-form button {
+            font-size: 14px;
+           
+        }
+        h2 {
+            color:white;
+            font-size: 1.3rem;
+        }
+        .btn {
+            font-size: 0.6rem;
+            padding: 5px 5px;
+        }
+        label {
+            color:white;
+            font-size: 1rem;
+        }
+    }
+    
+</style>
+<body>
+    <div class="background-container"></div>
+    <div class="overlay">
+        <div class="container form-container  ">
+            <h2 class="text-center text-white">Class Schedule</h2>
+            {% if error_message %}
+                <div class="alert alert-danger">{{ error_message }}</div>
+            {% endif %}
+            <form method="post" action="{% url 'addschedule_db' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="trainer">Select Trainer:</label>
+                    <select name="trainer" id="trainer" required onchange="updateTrainees(this.value)">
+                        <option value="" selected disabled>Select Trainer</option>
+                        {% for trainer in trainers %}
+                            <option value="{{ trainer.id }}" {% if trainer.id == selected_trainer_id %}selected{% endif %}>
+                                {{ trainer.user.first_name }} {{ trainer.user.last_name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="trainee">Select Trainee:</label>
+                    <select name="trainee" id="trainee" required>
+                        <option value="" selected disabled>Select Trainee</option>
+                        {% for assignment in trainees %}
+                            <option value="{{ assignment.trainee.id }}">
+                                {{ assignment.trainee.user.first_name }} {{ assignment.trainee.user.last_name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="day">Select Day:</label>
+                    <select name="day" id="day" required>
+                        <option value="" selected disabled>Select Day</option>
+                        <option value="Monday">Monday</option>
+                        <option value="Tuesday">Tuesday</option>
+                        <option value="Wednesday">Wednesday</option>
+                        <option value="Thursday">Thursday</option>
+                        <option value="Friday">Friday</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="start_time">Start Time:</label>
+                    <input type="time" id="start_time" name="start_time" required>
+                </div>
+                <div class="form-group">
+                    <label for="end_time">End Time:</label>
+                    <input type="time" id="end_time" name="end_time" required>
+                </div>
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-primary">Add Schedule</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        function updateTrainees(trainerId) {
+            fetch(`/get_trainees/${trainerId}/`)
+                .then(response => response.json())
+                .then(data => {
+                    const traineeSelect = document.getElementById('trainee');
+                    traineeSelect.innerHTML = '<option value="" selected disabled>Select Trainee</option>';
+                    data.trainees.forEach(trainee => {
+                        const option = document.createElement('option');
+                        option.value = trainee.id;
+                        option.textContent = trainee.name;
+                        traineeSelect.appendChild(option);
+                    });
+                });
+        }
+    </script>
+</body>
+{% endblock %}
+
+

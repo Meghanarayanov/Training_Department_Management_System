@@ -1,0 +1,188 @@
+{% extends 'adminbase.html' %}
+{% block content %}
+{% load static %}
+<style>
+    .background-container {
+        background-image: url('{% static "images/wall5.jpg" %}');
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        filter: blur(0.1px);
+        z-index: -1;
+    }
+    .overlay {
+        position: fixed;
+        top: 66px; /* Adjusted for navbar height */
+        left: 220px; /* Adjusted for navbar width */
+        width: calc(100% - 220px); /* Adjusted for navbar width */
+        height: calc(100% - 56px); /* Adjusted for navbar height */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow-y: auto; /* Allow vertical scrolling */
+        padding: 20px; /* Additional padding for better spacing */
+        background-color: rgba(12, 9, 9, 0.5);
+    }
+    @media (min-width: 992px) {
+        .vertical-nav {
+            position: fixed;
+            top: 56px;
+            left: 0;
+            width: 220px;
+            height: 100%;
+            background-color: #f8f8f8;
+            overflow-y: auto;
+            padding-top: 30px;
+        }
+        li {
+            border-bottom: 2px solid black;
+        }
+        li:hover {
+            background-color: blueviolet;
+        }
+    }
+    .form-container {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        max-width: 600px; /* Adjust the width as needed */
+        margin: 0 auto; /* Center the form container */
+       
+        padding: 20px;
+        border-radius: 5px;
+        background: rgba(255, 255, 255, 0.5); /* Slightly transparent white background for readability */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .form-group {
+        margin-bottom: 15px;
+    }
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+    input[type="text"], input[type="date"], select {
+        width: 100%;
+        padding: 8px;
+        margin: 5px 0 10px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    .radio-group {
+        display: flex;
+        align-items: center;
+    }
+    .radio-group input {
+        margin-left: 10px;
+    }
+    .radio-group label {
+        margin-left: 5px;
+    }
+    .text-center {
+        text-align: center;
+    }
+    .table-container {
+        margin-top: 20px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 18px;
+        text-align: left;
+    }
+    table th, table td {
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+    }
+    table th {
+        background-color: #f2f2f2;
+    }
+    @media (max-width: 991px) {
+        .overlay {
+            top: 56px; /* Adjust for navbar height */
+            left: 0;
+            width: 100%;
+            height: calc(100% - 56px); /* Adjust for navbar height */
+            padding: 10px; /* Reduce padding for smaller screens */
+        }
+        .form-container {
+            padding: 20px; /* Reduce padding for smaller screens */
+            
+        }
+        .col-sm-8, .col-md-6, .col-lg-6 {
+            width: 100%;
+            padding: 0 10px;
+        }
+    }
+    @media (max-width: 575px) {
+        .col-sm-8, .col-md-6, .col-lg-6 {
+            padding: 0 5px;
+        }
+        .login-form input, .login-form select, .login-form button {
+            font-size: 14px;
+           
+        }
+        h2 {
+            color:white;
+            font-size: 1.3rem;
+        }
+        .btn {
+            font-size: 0.6rem;
+            padding: 5px 5px;
+        }
+        label {
+            color:white;
+            font-size: 1rem;
+        }
+        td{
+            font-size:0.8rem;
+        }
+        th{
+            font-size:0.9rem;
+        }
+        select{
+            font-size:0.8rem;
+        }
+        input{
+            font-size:0.8rem;
+        }
+    }
+    
+</style>
+<body>
+<div class="background-container"></div>
+<div class="overlay">
+    <div class="container form-container">
+        <h2 class="text-center text-white">Attendance Records for {{ selected_trainer.user.first_name }} {{ selected_trainer.user.last_name }}</h2>
+        {% if attendance_records %}
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in attendance_records %}
+                    <tr>
+                        <td>{{ record.date }}</td>
+                        <td>{{ record.status }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p class="text-center">No attendance records found for the selected trainer and date range.</p>
+        {% endif %}
+    </div>
+</div>
+</body>
+{% endblock %}

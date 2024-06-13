@@ -1,0 +1,158 @@
+{% extends 'adminbase.html' %}
+{% block content %}
+{% load static %}
+<style>
+    /* Add your styles here */
+    .background-container {
+        background-image: url('{% static "images/wall5.jpg" %}');
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        filter: blur(0.1px);
+        z-index: -1;
+    }
+    .overlay {
+        position: fixed;
+        top: 66px; /* Adjusted for navbar height */
+        left: 220px; /* Adjusted for navbar width */
+        width: calc(100% - 220px); /* Adjusted for navbar width */
+        height: calc(100% - 56px); /* Adjusted for navbar height */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow-y: auto; /* Allow vertical scrolling */
+        padding: 20px; /* Additional padding for better spacing */
+        background-color: rgba(12, 9, 9, 0.5);
+    }
+    @media (min-width: 992px) {
+        .vertical-nav {
+            position: fixed;
+            top: 56px;
+            left: 0;
+            width: 220px;
+            height: 100%;
+            background-color: #f8f8f8;
+            overflow-y: auto;
+            padding-top: 30px;
+        }
+        li {
+            border-bottom: 2px solid black;
+        }
+        li:hover {
+            background-color: blueviolet;
+        }
+    }
+    .table-container {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        max-width: 100%; /* Ensure full width on smaller screens */
+        height: calc(100% - 56px); /* Adjusted for navbar height */
+        /* Allow horizontal scrolling */
+        margin: 0 auto; /* Center the table container */
+    }
+    .table-responsive {
+        width: 100%;
+        display: block;
+        overflow-x: auto; /* Enable horizontal scrolling */
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border: 1px solid #ddd;
+    }
+    .profile-image {
+        max-width: 100px; /* Adjust as needed */
+        max-height: 100px; /* Adjust as needed */
+    }
+    .cert-image {
+        max-width: 100px; /* Adjust as needed */
+        max-height: 100px; /* Adjust as needed */}
+    @media (max-width: 991px) {
+        .overlay {
+            top: 56px; /* Adjust for navbar height */
+            left: 0;
+            width: 100%;
+            height: calc(100% - 56px); /* Adjust for navbar height */
+            padding: 10px; /* Reduce padding for smaller screens */
+        }
+        .table-container {
+            padding: 10px; /* Reduce padding for smaller screens */
+            max-width: 100%; /* Ensure full width on smaller screens */
+            height: calc(100% - 56px); /* Adjust for navbar height */
+        }
+    }
+    @media (max-width: 575px) {
+        .profile-image {
+            max-width: 40px; /* Adjust as needed for smaller screens */
+            max-height: 40px; /* Adjust as needed for smaller screens */
+        }
+        .cert-image {
+            max-width: 40px; /* Adjust as needed for smaller screens */
+            max-height: 40px; /* Adjust as needed for smaller screens */
+        }
+        .view{
+            font-size:0.8rem;
+        }
+        .delete{
+            font-size:0.8rem;
+        }
+        h2{
+            font-size:1.3rem;
+        }
+        td{
+            font-size:0.8rem;
+        }
+        th{
+            font-size:0.9rem;
+        }
+    }
+</style>
+<body>
+<div class="background-container"></div>
+<div class="overlay">
+    
+    <div class="container table-container">
+        <h2 class="text-center text-white">Trainer Details</h2>
+        <br>
+        <div class="table-responsive">
+            <table class="table table-bordered text-white text-center">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Contact</th>
+                        <th>Category</th>
+                        <th>Image</th>
+                        <th>Certificates</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for trainer in trainers %}
+                    <tr>
+                        <td>{{ trainer.user.first_name }} {{ trainer.user.last_name }}</td>
+                        <td>{{ trainer.user.email }}</td>
+                        <td>{{ trainer.contact }}</td>
+                        <td>{{ trainer.department.department_name }}</td>
+                        <td><img src="{{ trainer.image.url }}" alt="" class="profile-image"></td>
+                        <td><img src="{{ trainer.certificates.url }}" alt="" class="cert-image"><br>
+                            <a href="{{ trainer.certificates.url }}" class="view text-white">View Certificate</a></td>
+                        <td><a class=" delete text-white" href="{% url 'delete_trainer'  trainer.id %}">Delete</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+{% endblock %}

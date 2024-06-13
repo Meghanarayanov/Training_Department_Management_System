@@ -1,0 +1,133 @@
+{% extends 'adminbase.html' %}
+{% block content %}
+{% load static %}
+<style>
+    .background-container {
+        background-image: url('{% static "images/wall5.jpg" %}');
+        background-repeat: no-repeat;
+        background-size: cover;
+        max-width: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        filter: blur(0.1px);
+        z-index: -1;
+    }
+    .overlay {
+        position: fixed;
+        top: 56px; /* Adjusted for navbar height */
+        left: 220px; /* Adjusted for navbar width */
+        width: calc(100% - 220px); /* Adjusted for navbar width */
+        height: calc(100% - 56px); /* Adjusted for navbar height */
+        background-color: rgba(12, 9, 9, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow-y: auto; /* Allow scrolling */
+        padding-top: 20px; /* Additional padding for better spacing */
+    }
+    .form-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 80px;
+        margin-top: auto;
+    }
+    @media (min-width: 992px) {
+        .vertical-nav {
+            position: fixed;
+            top: 56px;
+            left: 0;
+            width: 220px;
+            height: 100%;
+            background-color: #f8f8f8;
+            overflow-y: auto;
+            padding-top: 30px;
+        }
+        li {
+            border-bottom: 2px solid black;
+        }
+        li:hover {
+            background-color: blueviolet;
+        }
+    }
+    @media (max-width: 991px) {
+        .overlay {
+            top: 56px; /* Adjust for navbar height */
+            left: 0;
+            width: 100%;
+            height: calc(100% - 56px); /* Adjust for navbar height */
+            padding: 10px; /* Reduce padding for smaller screens */
+        }
+        .form-container {
+            padding: 20px; /* Reduce padding for smaller screens */
+            
+        }
+        .col-sm-8, .col-md-6, .col-lg-6 {
+            width: 100%;
+            padding: 0 10px;
+        }
+    }
+    @media (max-width: 575px) {
+        .col-sm-8, .col-md-6, .col-lg-6 {
+            padding: 0 5px;
+        }
+        .login-form input, .login-form select, .login-form button {
+            font-size: 14px;
+           
+        }
+        h2 {
+            font-size: 1.5rem;
+        }
+        .btn {
+            font-size: 0.6rem;
+            padding: 5px 5px;
+        }
+    }
+</style>
+<div class="background-container"></div> <!-- Container for the blurred background image -->
+<div class="overlay">
+    <div class="form-container">
+        <div class="col-sm-8 col-md-6 col-lg-6 border">
+            {% for message in messages %}
+                <div style="color:white; text-align: center;">{{ message }}</div>
+            {% endfor %}
+            <form action="{% url 'addtrainee_db' %}" method="post" enctype="multipart/form-data" class="login-form">
+                {% csrf_token %}
+                <h2 class="text-center text-white">Add Trainee</h2>
+                <label class="text-white">First Name</label>
+                <input type="text" name="fname" class="form-control mt-3" placeholder="First Name" required><br>
+                <label class="text-white">Last Name</label>
+                <input type="text" name="lname" class="form-control mt-3" placeholder="Last Name" required><br>
+                <label class="text-white">Email Address</label>
+                <input type="email" name="email" class="form-control mt-3" placeholder="Email Address" required><br>
+               
+                <label class="text-white">Username</label>
+                <input type="text" name="username" class="form-control mt-3" placeholder="Username" required><br>
+               
+                <input type="hidden" name="text" value="3">
+                <label class="text-white">Contact No</label>
+                <input type="text" name="contact" class="form-control mt-3" placeholder="Contact Number" required><br>
+                
+                <label class="text-white">Select Department</label>
+                <select class="form-control mt-3" name="department" required>
+                    {% for d in departments %}
+                    <option value="{{d.id}}">{{d.department_name}}</option>
+                    {% endfor %}
+                </select><br>
+                <label class="text-white">Upload Photo</label>
+                <input type="file" name="image" class="form-control mt-3" accept="image/*" required><br>
+                <label class="text-white">Upload Certificate</label>
+                <input type="file" name="certificate" class="form-control mt-3" required><br>
+            
+                <div class="text-center">
+                    <button type="submit" class="btn btn-dark btn-outline-light mt-3 w-50">Submit</button>
+                </div><br>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends 'traineebase.html' %}
+{% block content %}
+{% load static %}
+<style>
+    .background-container {
+        background-image: url('{% static "images/trainerwall.jpg" %}');
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        filter: blur(0.1px);
+        z-index: -1;
+    }
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(12, 9, 9, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow-y: auto;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+    @media (min-width: 992px) {
+        .overlay {
+            left: 220px; /* Adjusted for navbar width */
+            width: calc(100% - 220px); /* Adjusted for navbar width */
+        }
+    }
+    .notification-container {
+        width: 100%;
+        max-width: 800px;
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .notification-header {
+        margin-bottom: 20px;
+    }
+    .list-group-item {
+        background-color: transparent;
+    }
+    .list-group-item-info {
+        background-color: rgba(0, 123, 255, 0.2);
+    }
+    @media (max-width: 991px) {
+        .overlay {
+            top: 56px; /* Adjust for navbar height */
+            left: 0;
+            width: 100%;
+            height: calc(100% - 56px); /* Adjust for navbar height */
+            padding: 10px; /* Reduce padding for smaller screens */
+        }
+        .notification-container {
+            padding: 20px; /* Reduce padding for smaller screens */
+        }
+        .col-sm-8, .col-md-6, .col-lg-6 {
+            width: 100%;
+            padding: 0 10px;
+        }
+    }
+    @media (max-width: 575px) {
+        
+        .col-sm-8, .col-md-6, .col-lg-6 {
+            padding: 0 5px ;
+         
+        }
+        .login-form input, .login-form select, .login-form button {
+            font-size: 14px;
+        
+           
+        }
+       
+
+            h2 {
+                font-size: 1.5rem;
+            }
+           
+            td{
+                font-size:0.7rem;
+            }
+            li{
+                font-size:0.7rem;
+            }
+           
+            
+            
+    }
+</style>
+<div class="background-container"></div>
+<div class="overlay">
+    <div class="notification-container">
+        <h2 class="notification-header">Notifications</h2>
+        <ul class="list-group">
+            {% for notification in notifications %}
+            <li class="list-group-item {% if not notification.read %}list-group-item-info{% endif %}">
+                {{ notification.message }}
+                <br>
+                <small class="text-muted">{{ notification.created_at }}</small>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

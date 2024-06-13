@@ -1,0 +1,208 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<style>
+    /* Background and Overlay */
+    .background-container {
+        background-image: url('{% static "images/wall3.jpeg" %}');
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+    }
+    .overlay {
+        position: relative;
+        z-index: 1;
+        background-color: rgba(1, 0, 0, 0.3); /* Lighter overlay */
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 120px;
+        margin-bottom: 120px;
+    }
+    /* Contact Information Section */
+    .contact-info {
+        margin-bottom: 30px;
+        padding: 20px;
+        border-radius: 10px;
+        background-color: black;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow */
+    }
+    .contact-info h2 {
+        color: white;
+        margin-top: 0;
+        margin-bottom: 10px; /* Add spacing */
+    }
+    .contact-info p {
+        color: #666;
+        margin-bottom: 5px; /* Add spacing */
+    }
+    /* Contact Form Section */
+    .contact-form {
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 10px;
+        background-color: black;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow */
+        
+    }
+    .contact-form h2 {
+        color: white;
+        margin-top: 0;
+        margin-bottom: 10px; /* Add spacing */
+    }
+    .form-group {
+        margin-bottom: 10px; /* Add spacing */
+    }
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        transition: border-color 0.3s ease;
+    }
+    .form-control:focus {
+        border-color: #007bff; /* Highlight on focus */
+    }
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: #fff;
+        padding: 5px 10px; /* Increase padding */
+        font-size: 16px; /* Increase font size */
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+        
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+    /* Footer */
+    .footer {
+        background-color: #343a40;
+        color: white;
+        text-align: center;
+        padding: 20px 0;
+    }
+    .social-icons a {
+        color: #fff;
+        margin: 0 10px; /* Increase spacing */
+        font-size: 24px;
+        transition: color 0.3s ease;
+    }
+    .social-icons a:hover {
+        color: #007bff; /* Highlight on hover */
+    }
+    
+    @media (max-width: 576px) {
+        .container {
+            padding: 15px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+        }
+        h2 {
+            font-size: 1.4rem;
+        }
+        h3 {
+            font-size: 1rem;
+        }
+        p{font-size: 0.8rem;}
+
+        .para {
+            font-size: 0.9rem;
+        }
+        label{font-size:0.9rem;}
+
+        .btn {
+            font-size: 0.6rem;
+            padding: 5px 5px;
+        }
+        .terms{
+            font-size:0.8rem;
+        }
+        .copy{
+            font-size:0.8rem;
+        }
+        .follow{
+            font-size:0.8rem;
+        }
+        .social-icons a {
+            font-size:0.8rem;}
+            .nav-item a {
+                font-size:0.8rem;
+             }
+    }
+
+</style>
+
+<div class="background-container"></div>
+<div class="container">
+    <div class="overlay">
+        <h1 class="text-center text-white mb-5">CONTACT US</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="contact-form ">
+                    
+                    <h2 class="text-center">Contact Form</h2>
+                    <form method="post" action="{% url 'contact' %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="name" class="text-white">Name:</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="text-white">Email:</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message" class="text-white">Message:</label>
+                            <textarea class="form-control" id="message" name="message" rows="2" required></textarea>
+                        </div>
+                        <div class="row justify-content-center">
+                        <button type="submit" class="btn btn-primary">Submit</button></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-4">
+            <div class="col-md-6">
+                <div class="contact-info">
+                    <h2 class="text-center">Contact Information</h2>
+                    <p>If you have any questions, feel free to reach out to us through the following contact details:</p>
+                    <p><strong>Address:</strong> 123 Stellar Street, Galaxy City, Space Country</p>
+                    <p><strong>Email:</strong> contact@stellarsolutions.com</p>
+                    <p><strong>Phone:</strong> +123 456 7890</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <h5 class="terms text-center mt-3">Terms & Conditions | Privacy Policy</h5>
+            </div>
+            <div class="col-md-12 social-icons">
+                <p class="copy text-center text-white">Copyright © 2024 STELLAR Solutions. All rights reserved.</p>
+                <p class="follow text-center text-white">Follow Us On:</p>
+                <div class="text-center">
+                    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+{% endblock %}
+
+

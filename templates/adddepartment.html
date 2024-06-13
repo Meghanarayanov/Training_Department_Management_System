@@ -1,0 +1,105 @@
+{% extends 'adminbase.html' %}
+{% block content %}
+{% load static %}
+<style>
+    .background-container {
+        background-image: url('{% static "images/wall5.jpg" %}');
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        filter: blur(0.1px);
+        z-index: -1;
+    }
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(12, 9, 9, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow-y: auto;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+    @media (min-width: 992px) {
+        .overlay {
+            left: 220px; /* Adjusted for navbar width */
+            width: calc(100% - 220px); /* Adjusted for navbar width */
+        }
+    }
+    @media (min-width: 992px) {
+        .vertical-nav {
+            position: fixed;
+            top: 56px;
+            left: 0;
+            width: 220px;
+            height: 100%;
+            background-color: #f8f8f8;
+            overflow-y: auto;
+            padding-top: 30px;
+        }
+        li {
+            border-bottom: 2px solid black;
+        }
+        li:hover {
+            background-color: blueviolet;
+        }
+    }
+    .row {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 40px;
+        margin-top: auto;
+    }
+    .form-container {
+        width: 100%;
+        max-width: 500px; /* Maximum width for the form */
+        background: rgba(255, 255, 255, 0.2); /* Slightly transparent white background for readability */
+        padding: 20px;
+        border-radius: 8px; /* Rounded corners for better aesthetics */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for better separation from the background */
+    }
+    @media (max-width: 576px) {
+       
+
+        h2 {
+            font-size: 1.5rem;
+        }
+        .btn {
+            font-size: 0.8rem;
+            padding: 5px 5px;
+        }
+    }
+    
+</style>
+<div class="background-container"></div> <!-- Container for the blurred background image -->
+<div class="overlay">
+    
+    <div class="container form-container">
+        <form action="{% url 'adddepartment_db' %}" method="post" enctype="multipart/form-data" class="login-form">
+            {% csrf_token %}
+            {% if messages %}
+    <div id="message" class="text-center text-white">
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    </div>
+    {% endif %}
+            <h2 class="text-center text-white">Add Department</h2>
+            <input type="text" name="departmentname" class="form-control mt-3" placeholder="Department Name"><br>
+            <div class="text-center">
+                <button type="submit" class="btn btn-dark btn-outline-light mt-3 w-50">SAVE</button>
+            </div><br>
+        </form>
+    </div>
+</div>
+{% endblock %}

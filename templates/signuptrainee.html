@@ -1,0 +1,255 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .content-wrapper {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        width: 100%;
+    }
+
+    .background-container {
+        background-image: url('{% static "images/wall6.jpg" %}');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+      
+        z-index: -1;
+    }
+
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(12, 6, 9, 0.6);
+        z-index: -1;
+    }
+
+    .container {
+        position: relative;
+        z-index: 1;
+        padding: 150px 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: 1;
+    }
+
+    .para {
+        margin-top: 20px;
+        text-align: center;
+        color: white;
+    }
+
+    .btn {
+        margin-top: 20px;
+    }
+
+    .footer {
+        background-color: black;
+        color: white;
+        text-align: center;
+        padding: 10px 0;
+        width: 100%;
+    }
+
+    .social-icons a {
+        margin: 0 10px;
+    }
+
+    h1 {
+        font-weight: bold;
+        filter: brightness(1.2) contrast(1.5);
+    }
+
+    @media (max-width: 1500px) {
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+    }
+
+    @media (max-width: 768px) {
+        h1 {
+            font-size: 2rem;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+        }
+
+        .para {
+            font-size: 1rem;
+            padding: 10px;
+        }
+
+        .btn {
+            font-size: 0.9rem;
+            padding: 10px 20px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        h1 {
+            font-size: 1.5rem;
+        }
+
+        h3 {
+            font-size: 1rem;
+        }
+
+        .para {
+            font-size: 0.9rem;
+        }
+
+        .btn {
+            font-size: 0.8rem;
+            padding: 8px 16px;
+        }
+        .nav-item a {
+            font-size:0.8rem;
+         }
+         
+
+       
+        h2 {
+            font-size: 1.4rem;
+        }
+        label{
+            font-size:1rem;
+        }
+      
+
+       
+        .nav-item a {
+            font-size:0.8rem;
+         }
+         .terms{
+            font-size:0.8rem;
+        }
+        .copy{
+            font-size:0.8rem;
+        }
+        .follow{
+            font-size:0.8rem;
+        }
+        .social-icons a {
+            font-size:0.8rem;}
+    }
+
+    .login-form {
+        padding: 20px;
+        border-radius: 10px;
+       
+        color: white;
+        width: 100%;
+    }
+
+    .page-container {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    .content-wrap {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+</style>
+
+<div class="page-container">
+    
+    <div class="content-wrap">
+        <div class="content-wrapper">
+            <div class="background-container"><div class="container">
+                
+            </div>
+            <div class="container">
+               
+            </div></div>
+            <div class="overlay"></div>
+            <div class="container">
+                <div class="row justify-content-center w-100">
+                    <div class="col-sm-8 col-md-6 col-lg-6 border">
+                        {% for message in messages %}
+                        <div style="color: white; text-align: center;">{{ message }}</div>
+                        {% endfor %}
+                        <form action="{% url 'signuptrainee_db' %}" method="post" enctype="multipart/form-data" class="login-form">
+                            {% csrf_token %}
+                            <h2 class="text-center">Trainee Registration</h2>
+                            <label>First Name</label><br>
+                            <input type="text" name="fname" class="form-control mt-3" placeholder="First Name" required><br>
+                            <label>Last Name</label><br>
+                            <input type="text" name="lname" class="form-control mt-3" placeholder="Last Name" required><br>
+                            <label>Email Address</label><br>
+                            <input type="email" name="email" class="form-control mt-3" placeholder="Email Address" required><br>
+                           
+                            <label>Username</label><br>
+                            <input type="text" name="username" class="form-control mt-3" placeholder="Username" required><br>
+                           
+                            <label>Contact No</label><br>
+                            <input type="text" name="contact" class="form-control mt-3" placeholder="Contact Number" required><br>
+                            
+                            <input type="hidden" name="text" value="3">
+                            <label class="text-white">Select Department</label><br>
+                            <select class="form-control mt-3" name="department" required>
+                                {% for d in departments %}
+                                <option value="{{d.id}}">{{d.department_name}}</option>
+                                {% endfor %}
+                            </select><br>
+                            <label>Upload Photo</label><br>
+                            <input type="file" name="image" class="form-control mt-3" accept="image/*" required><br>
+                            <label>Upload Certificate</label><br>
+                            <input type="file" name="certificate" class="form-control mt-3" required><br>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-dark btn-outline-light mt-3 w-50">Submit</button>
+                            </div><br>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-md-12">
+                    <h5 class="terms text-center mt-3">Terms & Conditions | Privacy Policy</h5>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-12">
+                        <p class="copy text-center text-white">Copyright © 2024 Stellar Solutions. All rights reserved.</p>
+                    </div>
+                    <div class="social-icons">
+                        <p class="follow text-white text-center">Follow Us On:</p>
+                        <a href="#" class="social-icon text-white"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon text-white"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+</body>
+</html>
+{% endblock %}

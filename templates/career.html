@@ -1,0 +1,195 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<style>
+    .background-container {
+        background-image:  url('{% static "images/wall3.jpeg" %}');
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+       
+        z-index: -1;
+    }
+    .footer {
+        background-color: #343a40;
+        color: white;
+        text-align: center;
+        padding: 20px 0;
+    }
+    .overlay {
+        position: relative;
+        z-index: 1;
+        background-color: rgba(255, 255, 255, 0.4);
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 120px;
+        margin-bottom: 120px;
+    }
+    .job-listing {
+        margin-bottom: 30px;
+        border: 1px solid #ddd;
+        padding: 20px;
+        border-radius: 10px;
+        background-color: #f9f9f9;
+    }
+    .job-listing h3 {
+        color: #333;
+        margin-top: 0;
+    }
+    .job-listing p {
+        color: #666;
+    }
+    .job-listing ul {
+        margin-bottom: 10px;
+        padding-left: 20px;
+    }
+    .job-listing ul li {
+        list-style-type: disc;
+    }
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: #fff;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+    .social-icons a {
+        color: #fff;
+        margin: 0 5px;
+        font-size: 24px;
+    }
+    @media (max-width: 576px) {
+        .container {
+            padding: 15px;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+        }
+        h2{
+            font-size:1.3rem
+        }
+
+        h3 {
+            font-size: 1.1rem;
+        }
+        li{
+            font-size: 1rem;
+        }
+
+        .para {
+            font-size: 0.9rem;
+        }
+
+        .btn {
+            font-size: 0.6rem;
+            padding: 5px 5px;
+        }
+        .nav-item a {
+            font-size:0.8rem;
+         }
+        .terms{
+            font-size:0.8rem;
+        }
+        .copy{
+            font-size:0.8rem;
+        }
+        .follow{
+            font-size:0.8rem;
+        }
+        .social-icons a {
+            font-size:0.8rem;}
+    }
+</style>
+<div class="background-container"></div>
+<div class="container">
+    <div class="overlay">
+        <h1 class="text-center mb-5">CAREER AT STELLAR</h1>
+
+        <!-- About Us Section -->
+        <div class="culture mb-5">
+            <h2>Our Culture</h2>
+            <p>At Stellar Solutions, we believe in fostering a collaborative and inclusive work environment. Our culture is built on the values of innovation, integrity, and teamwork. We encourage continuous learning and provide opportunities for professional growth.</p>
+        </div>
+
+        <!-- Benefits Section -->
+        <div class="benefits mb-5">
+            <h2>Benefits</h2>
+            <ul>
+                <li>Competitive Salary</li>
+                <li>Health and Dental Insurance</li>
+                <li>Flexible Working Hours</li>
+                <li>Professional Development Opportunities</li>
+                <li>Work-from-Home Options</li>
+            </ul>
+        </div>
+
+        <!-- Job Listings Section -->
+        <div class="job-listings">
+            <h2>Current Job Openings</h2>
+            <!-- Job Listing 1 -->
+            <div class="job-listing">
+                <h3>Software Developer</h3>
+                <p><strong>Location:</strong> Remote</p>
+                <p><strong>Responsibilities:</strong></p>
+                <ul>
+                    <li>Develop and maintain web applications</li>
+                    <li>Collaborate with cross-functional teams</li>
+                    <li>Write clean and efficient code</li>
+                </ul>
+                <p><strong>Qualifications:</strong></p>
+                <ul>
+                    <li>Bachelor's degree in Computer Science or related field</li>
+                    <li>2+ years of experience in software development</li>
+                    <li>Proficiency in JavaScript, HTML, CSS, and at least one backend language</li>
+                </ul>
+                <p><a href="apply-link" class="btn btn-primary">Apply Now</a></p>
+            </div>
+            <!-- Job Listing 2 -->
+            <div class="job-listing">
+                <h3>Project Manager</h3>
+                <p><strong>Location:</strong> Onsite/Remote</p>
+                <p><strong>Responsibilities:</strong></p>
+                <ul>
+                    <li>Manage and oversee project lifecycle</li>
+                    <li>Ensure timely delivery of projects</li>
+                    <li>Coordinate with clients and team members</li>
+                </ul>
+                <p><strong>Qualifications:</strong></p>
+                <ul>
+                    <li>Bachelor's degree in Business or related field</li>
+                    <li>3+ years of experience in project management</li>
+                    <li>Strong leadership and communication skills</li>
+                </ul>
+                <p><a href="apply-link" class="btn btn-primary">Apply Now</a></p>
+            </div>
+            <!-- More job listings can be added here -->
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <h5 class=" terms text-center mt-3">Terms & Conditions | Privacy Policy</h5>
+            </div>
+            <div class="col-md-12 social-icons">
+                <p class=" copy text-center text-white">Copyright © 2024 STELLAR Solutions. All rights reserved.</p>
+                <p class=" follow text-center text-white">Follow Us On:</p>
+                <div class="text-center">
+                    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+{% endblock %}
